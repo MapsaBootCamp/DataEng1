@@ -1,12 +1,11 @@
 import pymongo
 from uuid import uuid4
 
+uri = "mongodb://localhost:27017/"
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["ml-test"]
-mycollection = mydb["users-info"]
+def get_db_connection(db_name, collection_name,  uri = uri):
+    myclient = pymongo.MongoClient(uri)
+    mydb = myclient[db_name]
+    mycollection = mydb[collection_name]
+    return mycollection
 
-user_info = {"userId": str(uuid4()), "name": "Ashkan", "age": 20, "friends": ["Asghar", "Akbar"]}
-
-# mycollection.insert_one(user_info)
-mycollection.update_many({"name": "Ashkan"}, {"$set": {"age": 32}})
